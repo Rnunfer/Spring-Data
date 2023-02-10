@@ -1,6 +1,6 @@
-package repository;
+package com.example.demo.repository;
 
-import domain.Tutorial;
+import com.example.demo.domain.Tutorial;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
