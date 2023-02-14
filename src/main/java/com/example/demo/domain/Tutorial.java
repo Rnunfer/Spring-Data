@@ -18,7 +18,6 @@ import java.util.List;
 @Entity
 @Table(
     name = "tutorials" ,
-        schema = "bbdd_tutorials",
         indexes = {@Index(name = "title_index", columnList = "title", unique = true)}
 
 )

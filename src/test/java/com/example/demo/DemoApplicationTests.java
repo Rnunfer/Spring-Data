@@ -1,7 +1,11 @@
 package com.example.demo;
 
 import com.example.demo.domain.Comment;
+import com.example.demo.domain.Socio;
+import com.example.demo.domain.Tarjeta;
 import com.example.demo.domain.Tutorial;
+import com.example.demo.repository.SocioRepository;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +19,9 @@ class DemoApplicationTests {
 
     @Autowired
     TutorialRepository tutorialRepository;
+
+    @Autowired
+    SocioRepository socioRepository;
 
     /*@Autowired
     SocioRepository socioRepository;*/
@@ -72,6 +79,28 @@ class DemoApplicationTests {
         List<Tutorial> tutorialList = tutorialRepository.findAll();
         tutorialList.forEach(System.out::println);
 
+    }
+
+    @Test
+    @Order(1)
+    void testSocioTarjeta() {
+
+        Tarjeta tarjeta = Tarjeta.builder()
+                .numero("5837873248732687")
+                .caducidad("04/27")
+                .build();
+
+        Socio socio = Socio.builder()
+                .dni("58384964G")
+                .nombre("Luis")
+                .apellidos(" Luinardo de León")
+                .tarjeta(tarjeta)
+                .build();
+
+        tarjeta.setSocio(socio);
+        socioRepository.save(socio);
+
+        List<Socio> socioList = socioRepository.findAll();
     }
 
 }
