@@ -1,9 +1,7 @@
 package com.example.demo;
 
-import com.example.demo.domain.Comment;
-import com.example.demo.domain.Socio;
-import com.example.demo.domain.Tarjeta;
-import com.example.demo.domain.Tutorial;
+import com.example.demo.domain.*;
+import com.example.demo.repository.PeliculaRepository;
 import com.example.demo.repository.SocioRepository;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -11,8 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import com.example.demo.repository.TutorialRepository;
 
+import java.math.BigDecimal;
+import java.time.Duration;
+import java.time.Period;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 @SpringBootTest
 class DemoApplicationTests {
@@ -23,8 +25,8 @@ class DemoApplicationTests {
     @Autowired
     SocioRepository socioRepository;
 
-    /*@Autowired
-    SocioRepository socioRepository;*/
+    @Autowired
+    PeliculaRepository peliculaRepository;
 
     @Test
     void contextLoads() {
@@ -101,6 +103,34 @@ class DemoApplicationTests {
         socioRepository.save(socio);
 
         List<Socio> socioList = socioRepository.findAll();
+    }
+
+    @Test
+    void testPeliculaCategoriaManyToMany() {
+
+        Pelicula pelicula = Pelicula.builder()
+                .anyoLanzamiento("2005")
+                .caracteristicasEspecialesStr("Trailers")
+                .clasificacion(Clasificacion.valueOf("PG"))
+                .costeReemplazo(BigDecimal.valueOf(25))
+                .descripcion("Aventuras en el año 2005")
+                .duracion(Duration.ofDays(90))
+                .idioma("Español")
+                .idiomaOriginal("Español")
+                .periodoAlquiler(Period.ofYears(3))
+                .precioAlquiler(BigDecimal.valueOf(5))
+                .titulo("2005")
+                .build();
+
+        Categoria categoria = Categoria.builder()
+                .nombre("Aventura")
+                .build();
+
+        // Falta conectar la pelicula y categoria
+
+        peliculaRepository.save(pelicula);
+
+        List<Pelicula> peliculaList = peliculaRepository.findAll();
     }
 
 }

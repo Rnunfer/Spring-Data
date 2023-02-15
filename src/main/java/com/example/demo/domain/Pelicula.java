@@ -18,7 +18,7 @@ public class Pelicula {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long id_pelicula;
 
     private String titulo;
     @Lob
@@ -41,12 +41,20 @@ public class Pelicula {
     @Column(precision = 5, scale = 2)
     private BigDecimal costeReemplazo;
 
-    private Categoria clasificacion;
+    private Clasificacion clasificacion;
 
     @Column(columnDefinition = "set('Trailers','Commentaries','Deleted Scenes','Behind the Scenes')")
     private String caracteristicasEspecialesStr;
 
     private Date ultimaModificacion;
+
+    @ManyToMany
+    @JoinTable(
+            name = "pelicula_categoria",
+            joinColumns = @JoinColumn(name = "id_pelicula", referencedColumnName = "id_pelicula"),
+            inverseJoinColumns = @JoinColumn(name = "id_categoria", referencedColumnName = "id_categoria")
+    )
+    private Set<Categoria> categoria;
 
     public Set<String> getCaracteristicasEspeciales() {
         if(caracteristicasEspecialesStr == null) {
