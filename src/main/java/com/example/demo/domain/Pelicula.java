@@ -13,7 +13,7 @@ import java.util.*;
 @NoArgsConstructor
 @Builder
 @ToString
-@EqualsAndHashCode
+@EqualsAndHashCode(of = "id_pelicula")
 @Entity
 public class Pelicula {
 

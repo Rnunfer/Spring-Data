@@ -2,6 +2,7 @@ package com.example.demo;
 
 import com.example.demo.domain.*;
 import com.example.demo.repository.PeliculaRepository;
+import com.example.demo.repository.PersonaRepository;
 import com.example.demo.repository.SocioRepository;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,9 @@ class DemoApplicationTests {
 
     @Autowired
     PeliculaRepository peliculaRepository;
+
+    @Autowired
+    PersonaRepository personaRepository;
 
     @Test
     void contextLoads() {
@@ -126,8 +130,6 @@ class DemoApplicationTests {
                 .ultimaModificacion(new Date())
                 .build();
 
-        // Da fallos
-
         Set<Categoria> listaCategorias = new HashSet<>();
         listaCategorias.add(categoria);
         Set<Pelicula> listaPeliculas = new HashSet<>();
@@ -139,6 +141,33 @@ class DemoApplicationTests {
         peliculaRepository.save(pelicula);
 
         List<Pelicula> peliculaList = peliculaRepository.findAll();
+    }
+
+    @Test
+    public void personElementCollectionStringAndAddressEmbeddable() {
+        Persona persona = Persona.builder().name("Pablo Mermol")
+                .phoneNumbers(new HashSet<>())
+                .addresses((new HashSet<>()))
+                .build();
+
+        Address address1 = Address.builder().houseNumber(23)
+                .street("Portugal")
+                .city("Málaga")
+                .zipCode(29482)
+                .build();
+
+        Address address2 = Address.builder().houseNumber(23)
+                .street(("Francia"))
+                .city("Málaga")
+                .zipCode(29403)
+                .build();
+
+        persona.getAddresses().add(address1);
+        persona.getAddresses().add(address2);
+        persona.getPhoneNumbers().add("952132439");
+        persona.getPhoneNumbers().add("951234567");
+        personaRepository.save(persona);
+        Persona personaSaved = personaRepository.findById(persona.getId()).get();
     }
 
 }
