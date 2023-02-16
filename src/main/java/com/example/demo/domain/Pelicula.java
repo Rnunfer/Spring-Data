@@ -13,6 +13,7 @@ import java.util.*;
 @NoArgsConstructor
 @Builder
 @ToString
+@EqualsAndHashCode
 @Entity
 public class Pelicula {
 
@@ -48,7 +49,7 @@ public class Pelicula {
 
     private Date ultimaModificacion;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     @JoinTable(
             name = "pelicula_categoria",
             joinColumns = @JoinColumn(name = "id_pelicula", referencedColumnName = "id_pelicula"),
