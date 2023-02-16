@@ -12,9 +12,7 @@ import com.example.demo.repository.TutorialRepository;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.Period;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @SpringBootTest
 class DemoApplicationTests {
@@ -108,25 +106,35 @@ class DemoApplicationTests {
     @Test
     void testPeliculaCategoriaManyToMany() {
 
-        Pelicula pelicula = Pelicula.builder()
-                .anyoLanzamiento("2005")
-                .caracteristicasEspecialesStr("Trailers")
-                .clasificacion(Clasificacion.valueOf("PG"))
-                .costeReemplazo(BigDecimal.valueOf(25))
-                .descripcion("Aventuras en el año 2005")
-                .duracion(Duration.ofDays(90))
+        Pelicula pelicula = Pelicula.builder().titulo("Indiana Jones")
+                .descripcion("Película para toda la familia de aventura")
+                .anyoLanzamiento("1990")
                 .idioma("Español")
-                .idiomaOriginal("Español")
-                .periodoAlquiler(Period.ofYears(3))
-                .precioAlquiler(BigDecimal.valueOf(5))
-                .titulo("2005")
+                .idiomaOriginal("Inglés")
+                .duracion(Duration.parse("PT1H40M"))
+                .precioAlquiler(new BigDecimal("20.50"))
+                .periodoAlquiler(Period.of(0,1,15))
+                .clasificacion(Clasificacion.R)
+                .caracteristicasEspecialesStr("Trailers,Commentaries")
+                .categoria(new HashSet<>())
+                .ultimaModificacion(new Date())
                 .build();
 
         Categoria categoria = Categoria.builder()
                 .nombre("Aventura")
+                .peliculas(new HashSet<>())
+                .ultimaModificacion(new Date())
                 .build();
 
-        // Falta conectar la pelicula y categoria
+        // Da fallos
+
+        Set<Categoria> listaCategorias = new HashSet<>();
+        listaCategorias.add(categoria);
+        Set<Pelicula> listaPeliculas = new HashSet<>();
+        listaPeliculas.add(pelicula);
+
+        pelicula.setCategoria(listaCategorias);
+        categoria.setPeliculas(listaPeliculas);
 
         peliculaRepository.save(pelicula);
 
