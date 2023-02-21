@@ -16,6 +16,7 @@ public class Persona {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "person_id")
     private long id;
 
     private String name;
@@ -30,6 +31,8 @@ public class Persona {
     })
     private Set<Address> addresses = new HashSet<>();
 
+    @Embedded
+    private Address mainAddress;
 
     @ElementCollection
     @CollectionTable(name = "person_phone_numbers", joinColumns = @JoinColumn(name = "person_id"))
