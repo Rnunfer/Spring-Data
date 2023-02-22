@@ -150,6 +150,12 @@ class DemoApplicationTests {
                 .addresses((new HashSet<>()))
                 .build();
 
+        Address mainAddress = Address.builder().houseNumber(30)
+                .street("Bélgica")
+                .city("Málaga")
+                .zipCode(29402)
+                .build();
+
         Address address1 = Address.builder().houseNumber(23)
                 .street("Portugal")
                 .city("Málaga")
@@ -162,6 +168,7 @@ class DemoApplicationTests {
                 .zipCode(29403)
                 .build();
 
+        persona.setMainAddress(mainAddress);
         persona.getAddresses().add(address1);
         persona.getAddresses().add(address2);
         persona.getPhoneNumbers().add("952132439");
